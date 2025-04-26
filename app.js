@@ -1,21 +1,25 @@
 const express = require('express');
 const app = express();
-const pool = require('./db/exp-cat-query')
+const exp_cat = require('./db/exp-cat-query')
 console.log("I am in app.js ");
-(async () => {
-    try {
-      const res = await pool.query('SELECT NOW()');
-      console.log('Database connected:', res.rows[0]);
-    } catch (err) {
-      console.error('Database connection error:', err);
-    } finally {
-      pool.end();
-    }
-  })()
+
+exp_cat.getExpenseCategories().then(result => {
+    console.log(result);
+});
+exp_cat.deleteExpenseCategory(4).then(result => {
+    console.log(result);
+});
+
+
+/*exp_cat.updateExpenseCategory('Test1 Category',4).then(result => {
+    console.log(result);
+});
+exp_cat.insertExpenseCategory('4', 'Test Category').then(result => {  
+    console.log(result);
+});*/          
 
 
 
-//app.use(express.json());
-//app.use('/expense-category', require('./expense-category')); // Adjust the path if necessary
 
-//module.exports = app;n
+
+
